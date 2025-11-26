@@ -40,7 +40,10 @@ def load_raw_data(path: str | None = None) -> pd.DataFrame:
     """
 
     csv_path = path or DEFAULT_DATA_PATH
-    return pd.read_csv(csv_path)
+    # The source file occasionally includes Windows-1252 characters (e.g., £),
+    # which pandas cannot decode with the default UTF-8 setting. Explicitly
+    # setting the encoding keeps the loader resilient across environments.
+    return pd.read_csv(csv_path, encoding="latin1")
 
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
