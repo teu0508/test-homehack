@@ -30,35 +30,16 @@ def _normalize_columns(columns: Iterable[str]) -> List[str]:
     return normalized
 
 
-def load_raw_data(path: str | None = None, encoding: str | None = None) -> pd.DataFrame:
-    """Load the raw CSV file with resilient encoding handling.
+def load_raw_data(path: str | None = None) -> pd.DataFrame:
+    """Load the raw CSV file.
 
     Parameters
     ----------
     path: str | None
         Optional custom path; falls back to ``DATA_PATH`` env var.
-    encoding: str | None
-        Preferred encoding to try first (falls back to environment and common encodings).
     """
 
     csv_path = path or DEFAULT_DATA_PATH
-
-    candidate_encodings = [encoding, os.getenv("DATA_ENCODING"), "utf-8", "cp1252", "latin1"]
-    last_error: UnicodeDecodeError | None = None
-
-    for enc in candidate_encodings:
-        if not enc:
-            continue
-        try:
-            return pd.read_csv(csv_path, encoding=enc)
-        except UnicodeDecodeError as exc:  # pragma: no cover - defensive fallback
-            last_error = exc
-
-    # If all encodings fail, raise the last decoding error for visibility
-    if last_error:
-        raise last_error
-
-    # Fallback to default behaviour if no encoding was tried (should not occur)
     return pd.read_csv(csv_path)
 
 

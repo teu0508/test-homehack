@@ -27,7 +27,6 @@ A Streamlit-based data analytics dashboard for the Liverpool City Region housing
 
 ## Environment variables
 - `DATA_PATH` (optional): Override the CSV location. Defaults to `data/Copy of Housing_Pipeline_Long_List_External_Hackathon(Longlist).csv`.
-- `DATA_ENCODING` (optional): Force a specific CSV encoding if auto-detection fails (tries utf-8, cp1252, latin1 by default).
 
 ## Data preparation
 Use the helper script to generate a cleaned CSV for analysis or sharing:
